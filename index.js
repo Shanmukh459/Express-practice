@@ -1,6 +1,8 @@
 const express = require("express")
 const app = express()
 
+app.use(express.json())
+
 const courses = [
   { id: 1, name: "course1" },
   { id: 2, name: "course2" },
@@ -20,6 +22,15 @@ app.get("/api/courses/:id", (req, res) => {
   if (!course)
     return res.status(404).send("The course with given id doesn't exist.")
   return res.send(course)
+})
+
+app.post("/api/courses", (req, res) => {
+  const course = {
+    id: courses.length + 1,
+    name: req.body.name,
+  }
+  courses.push(course)
+  res.send(course)
 })
 
 const port = process.env.PORT || 3000
