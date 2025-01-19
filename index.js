@@ -1,3 +1,5 @@
+const morgan = require("morgan")
+const helmet = require("helmet")
 const Joi = require("joi")
 const log = require("./logger")
 const auth = require("./auth")
@@ -5,6 +7,10 @@ const express = require("express")
 const app = express()
 
 app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+app.use(express.static("public"))
+app.use(helmet())
+app.use(morgan("tiny"))
 
 app.use(log)
 app.use(auth)
